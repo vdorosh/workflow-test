@@ -1,0 +1,19 @@
+name: CI/CD
+
+on:
+  push:
+
+jobs:
+  get-changes:
+    runs-on: ubuntu-latest
+    steps:
+    - name: "Checkout GitHub Action"
+      uses: actions/checkout@v3
+
+  production_approval:
+    # if: github.ref == 'refs/heads/main' || github.base_ref == 'main' || startsWith(github.ref, 'refs/heads/release-')
+    needs: [get-changes]
+    runs-on: ubuntu-latest
+    environment: production_with_approval
+    steps:
+      - run: echo "Approved"
